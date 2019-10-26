@@ -1,3 +1,5 @@
+#!/usr/bin/python
+import sys
 import csv
 from prettytable import from_csv
 from prettytable import PrettyTable
@@ -121,3 +123,4 @@ def show_all():
    try_again()
 menu()
 calculation()
+
