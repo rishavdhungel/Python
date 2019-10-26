@@ -1,5 +1,6 @@
 #!/usr/bin/python
-import sys
+from os import sys, path
+sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 import csv
 from prettytable import from_csv
 from prettytable import PrettyTable
@@ -123,4 +124,3 @@ def show_all():
    try_again()
 menu()
 calculation()
-
