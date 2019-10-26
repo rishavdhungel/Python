@@ -7,7 +7,6 @@ e.g
 cd PythonProects(Go to that directory where application.py and data.csv are located)
 
 
-
 python3 application.py
 
 
