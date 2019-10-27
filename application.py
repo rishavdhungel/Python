@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 from os import sys, path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 import csv
@@ -26,9 +26,8 @@ def menu():
            """
         print(message)
     else:
-        print("Wrong Username or Password! \n Please try again!")
-        name = input("Enter a Username: ")
-        password = input("Enter a password: ")
+       check()
+
 def calculation():
     task = int(input("Enter a Option: "))
     if (task) == 1:
@@ -114,13 +113,20 @@ def search_car():
                 table = PrettyTable(row)
                 print(table)
         else:
-            print("No Other %name Model Found In Database!")%name
-    try_again()
+            print("No such model found in Database:")
+            try_again()
+
 def show_all():
    csvfile = open("data.csv")
    x = from_csv(csvfile)
    print(x)
    csvfile.close()
    try_again()
+
+def check():
+        print("Wrong Username or Password! \n Please try again!")
+        menu()
+
 menu()
 calculation()
+
