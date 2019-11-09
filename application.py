@@ -2,31 +2,55 @@
 from os import sys, path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 import csv
+from register import register
 from prettytable import from_csv
 from prettytable import PrettyTable
-def menu():
-    correct_password = "python123"
-    correct_username = "rishav"
-    name = input("Enter a Username: ")
-    password = input("Enter a password: ")
-
-    if correct_password == password and correct_username == name:
-        message = "Hi! %s you are logged in" % name + """\n 
-
-          ------------------------------------------------------------------
-         |==================================================================| 
-         |======== Welcome To Car Dealership Management Software ===========|
-         |==================================================================|
-          ------------------------------------------------------------------
-     1.Buy 
-     2.Sell
-     3.Search
-     4.Show all
-     5.Quit
-           """
-        print(message)
+def ask():
+    print('''
+    
+    1._____________________       2._________________
+      |       LOG IN       |        |    SIGN UP     |
+      |____________________|        |________________|
+          ''')
+    choice = input("Choose Your Option (1/2): ")
+    if choice == "1":
+        menu()
+    if choice == "2":
+        register()
     else:
-       check()
+        print("Invalid Input: ")
+        ask()
+
+
+
+
+def menu():
+    name = str(input("Enter a Username: "))
+    password = str(input("Enter a password: "))
+    with open('info.csv', 'r+') as csv_file:
+        csvreader = csv.reader(csv_file)
+        for row in csvreader:
+            first = name
+            second = password
+            if row[2] == first and row[4]== second:
+                    message = "Hi! %s you are logged in" % name + """\n 
+
+                      ------------------------------------------------------------------
+                     |==================================================================| 
+                     |======== Welcome To Car Dealership Management Software ===========|
+                     |==================================================================|
+                      ------------------------------------------------------------------
+                 1.Buy 
+                 2.Sell
+                 3.Search
+                 4.Show all
+                 5.Quit
+                       """
+                    print(message)
+                    calculation()
+        else:
+            check()
+
 
 def calculation():
     task = int(input("Enter a Option: "))
@@ -71,7 +95,7 @@ def try_again():
         exit(0)
 def buy():
     fieldnames = [ 'Model', 'Rego', 'Color', 'Price']
-    with open ("data.csv", "a") as csv_file:
+    with open ('data.csv', 'a') as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         Model = input("Enter a Model of a Car: ")
         Rego = input("Enter a Registration No(Rego): ")
@@ -102,8 +126,8 @@ def sell():
         writer = csv.writer(writeFile)
         writer.writerows(lines)
         try_again()
-    csvfile.close()
-    readFile.close()
+        csvfile.close()
+        readFile.close()
 def search_car():
     with open('data.csv','r+') as csvfile:
         name = str(input('Enter the Model to search : '))
@@ -126,7 +150,33 @@ def show_all():
 def check():
         print("Wrong Username or Password! \n Please try again!")
         menu()
+def register():
+    print("Thank You!! For Choosing Us ")
+    fieldnames = ['firstname', 'lastname','username', 'email', 'password']
+    with open('info.csv', 'a') as  csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        firstname = input("Enter your first name")
+        lastname = input("Enter your last name")
+        username = input("Enter a username: ")
+        email = input("Enter Your email address:")
+        newpassword = input("Set a  new password")
+        verify = input("Re enter a password")
 
-menu()
-calculation()
+        if newpassword == str(verify):
+            writer.writerow({
+                        "firstname": firstname,
+                        "lastname": lastname,
+                        "username": username,
+                        "email": email,
+                        "password": newpassword
+                    })
 
+        else:
+                    print("The Password you input does not match")
+                    print("Try Again")
+                    register()
+
+
+
+
+ask()
