@@ -2,7 +2,6 @@
 from os import sys, path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 import csv
-from register import register
 from prettytable import from_csv
 from prettytable import PrettyTable
 def ask():
